@@ -1,5 +1,5 @@
 version: 0.0.{build}
 before_build:
-- cmd: nuget restore
+- cmd: nuget restore RetrospectiveHelper/RetrospectiveHelper.sln
 build:
   verbosity: minimal
