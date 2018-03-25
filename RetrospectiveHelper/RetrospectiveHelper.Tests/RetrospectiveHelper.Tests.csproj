@@ -109,9 +109,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RetrospectiveHelper\RetrospectiveHelper.csproj">
+    <ProjectReference Include="..\RetrospectiveHelper\RetrospectiveHelper.Server.csproj">
       <Project>{96F5674C-F8A1-439E-AACA-9C09F3984D00}</Project>
-      <Name>RetrospectiveHelper</Name>
+      <Name>RetrospectiveHelper.Server</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
