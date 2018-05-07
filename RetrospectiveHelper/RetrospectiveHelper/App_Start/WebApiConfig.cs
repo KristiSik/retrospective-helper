@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
+using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json.Serialization;
 
 namespace RetrospectiveHelper
 {
@@ -10,6 +13,9 @@ namespace RetrospectiveHelper
         public static void Register(HttpConfiguration config)
         {
             // Konfiguracja i usługi składnika Web API
+            // Skonfiguruj składnik Web API, aby korzystał tylko z uwierzytelniania za pomocą tokenów bearer.
+            config.SuppressDefaultHostAuthentication();
+            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
             // Trasy składnika Web API
             config.MapHttpAttributeRoutes();
