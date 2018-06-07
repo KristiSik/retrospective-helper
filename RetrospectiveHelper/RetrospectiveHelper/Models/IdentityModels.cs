@@ -29,5 +29,7 @@ namespace RetrospectiveHelper.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<RetrospectiveHelper.Models.Project> Projects { get; set; }
     }
 }

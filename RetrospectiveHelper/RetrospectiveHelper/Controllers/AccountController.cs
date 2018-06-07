@@ -49,17 +49,55 @@ namespace RetrospectiveHelper.Controllers
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
-        public UserInfoViewModel GetUserInfo()
+        public IHttpActionResult GetUserInfo()
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
             var user = UserManager.FindById(User.Identity.GetUserId());
+            if (user == null)
+            {
+                return Unauthorized();
+            }
 
-            return new UserInfoViewModel
+            return Ok(new UserInfoViewModel
             {
                 FullName = user.FullName,
-                Email = User.Identity.GetUserName()
-            };
+                Email = user.Email
+            });
+        }
+
+        // PUT api/Account/ChangeInfo
+        [HttpPut]
+        [Route("ChangeInfo")]
+        public IHttpActionResult ChangeInfo(ChangeInfoBindingModel model)
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.FullName))
+            {
+                user.FullName = model.FullName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.Email))
+            {
+                user.Email = model.Email;
+            }
+
+            var result = UserManager.Update(user);
+            if (!result.Succeeded)
+            {
+                return BadRequest();
+            }
+
+            return Ok(new UserInfoViewModel
+            {
+                FullName = user.FullName,
+                Email = user.Email
+            });
         }
 
         // POST api/Account/Logout
