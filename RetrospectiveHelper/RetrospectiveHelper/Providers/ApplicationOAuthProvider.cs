@@ -59,7 +59,6 @@ namespace RetrospectiveHelper.Providers
 
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
-            // Poświadczenia hasła właściciela zasobu nie udostępniają identyfikatora klienta.
             if (context.ClientId == null)
             {
                 context.Validated();

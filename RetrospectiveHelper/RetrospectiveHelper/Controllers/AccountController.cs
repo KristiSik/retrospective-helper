@@ -53,8 +53,11 @@ namespace RetrospectiveHelper.Controllers
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
+            var user = UserManager.FindById(User.Identity.GetUserId());
+
             return new UserInfoViewModel
             {
+                FullName = user.FullName,
                 Email = User.Identity.GetUserName()
             };
         }
@@ -89,7 +92,7 @@ namespace RetrospectiveHelper.Controllers
 
         // POST api/Account/RemoveLogin
         [Route("DeleteAccount")]
-        public async Task<IHttpActionResult> RemoveLogin()
+        public IHttpActionResult DeleteAccount()
         {
             if (!User.Identity.IsAuthenticated)
             {
@@ -116,7 +119,7 @@ namespace RetrospectiveHelper.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.Email, FullName = model.FullName, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 

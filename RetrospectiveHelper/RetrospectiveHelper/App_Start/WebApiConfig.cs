@@ -12,12 +12,9 @@ namespace RetrospectiveHelper
     {
         public static void Register(HttpConfiguration config)
         {
-            // Konfiguracja i usługi składnika Web API
-            // Skonfiguruj składnik Web API, aby korzystał tylko z uwierzytelniania za pomocą tokenów bearer.
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-            // Trasy składnika Web API
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
