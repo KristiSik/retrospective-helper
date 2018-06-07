@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RetrospectiveHelper.Models
 {
@@ -14,5 +15,7 @@ namespace RetrospectiveHelper.Models
         public string Name { get; set; }
 
         public DateTime Created { get; set; }
+
+        public virtual ICollection<ProjectMembership> Members { get; set; }
     }
 }

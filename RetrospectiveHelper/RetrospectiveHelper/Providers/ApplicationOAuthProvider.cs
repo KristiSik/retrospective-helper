@@ -32,7 +32,7 @@ namespace RetrospectiveHelper.Providers
 
             if (user == null)
             {
-                context.SetError("invalid_grant", "Nazwa użytkownika lub hasło są niepoprawne.");
+                context.SetError("invalid_grant", "Incorrect username or password.");
                 return;
             }
 

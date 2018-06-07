@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 
 namespace RetrospectiveHelper.Models
 {
@@ -16,6 +17,8 @@ namespace RetrospectiveHelper.Models
         }
 
         public string FullName { get; set; }
+
+        public virtual ICollection<ProjectMembership> Projects { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -30,6 +33,6 @@ namespace RetrospectiveHelper.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<RetrospectiveHelper.Models.Project> Projects { get; set; }
+        public System.Data.Entity.DbSet<Project> Projects { get; set; }
     }
 }
