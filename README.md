@@ -2,6 +2,8 @@
 
 ![AppVeyor](https://ci.appveyor.com/api/projects/status/8mlgtyidag6gonae?svg=true)
 
+Deployed at: [retro-helper.azurewebsites.net](https://retro-helper.azurewebsites.net/)
+
 ## Team
 Arkadiusz Sielecki
 
