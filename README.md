@@ -1,6 +1,6 @@
 # RETROSPECTIVE HELPER
 
-![AppVeyor](https://ci.appveyor.com/api/projects/status/8mlgtyidag6gonae?svg=true)
+[![AppVeyor](https://ci.appveyor.com/api/projects/status/8mlgtyidag6gonae?svg=true)](https://ci.appveyor.com/project/mzwierzchlewski/retrospective-helper)
 
 Deployed at: [retro-helper.azurewebsites.net](https://retro-helper.azurewebsites.net/)
 
