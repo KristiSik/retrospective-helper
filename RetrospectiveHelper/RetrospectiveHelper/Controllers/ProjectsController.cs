@@ -328,10 +328,22 @@ namespace RetrospectiveHelper.Controllers
         [ResponseType(typeof(Project))]
         public async Task<IHttpActionResult> DeleteProject(int id)
         {
-            Project project = await db.Projects.FindAsync(id);
+            var project = await db.Projects.FindAsync(id);
             if (project == null)
             {
                 return NotFound();
+            }
+
+            var currentUser = UserManager.FindById(User.Identity.GetUserId());
+            if (currentUser == null)
+            {
+                return Unauthorized();
+            }
+
+            var projectMembership = currentUser.Projects.FirstOrDefault(p => p.Role == ProjectRoles.Admin && p.ProjectId == project.Id);
+            if (projectMembership == null)
+            {
+                return Unauthorized();
             }
 
             db.Projects.Remove(project);
