@@ -120,7 +120,8 @@ namespace RetrospectiveHelper.Controllers
 
             db.Projects.Add(project);
             await db.SaveChangesAsync();
-
+            // eager loading
+            project = db.Projects.Where(p => p.Id == project.Id).Include(p => p.Members.Select(m => m.User)).First();
             return Ok(new ProjectViewModel(project));
         }
 
