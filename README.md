@@ -22,6 +22,26 @@ Users are able to create projects, add its members and admins.
 ## Authentication
 Authentication uses Bearer Tokens. After getting a token (see API reference), all requests need Bearer Token authentication headers.
 
+## Requirements
+.NET Framework 4.6.1
+Visual Studio (preferably)
+
+## Setting up a developer instance
+1. Clone repo
+2. Open project in Visual Studio
+3. Build & run
+
+In case of database problems - create an initial database migration and update the database.
+
+## Deployment
+### Azure
+Create Azure resource - App Service with SQL - Deploy via Visual Studio by following the prompts.
+
+### IIS
+1. Publish to folder
+2. Create IIS Site pointing to that folder
+3. Add HTTP bindings
+
 # API Documentation
 ## Account management
 ### Registration
