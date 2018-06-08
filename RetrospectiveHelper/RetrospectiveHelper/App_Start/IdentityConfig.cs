@@ -6,8 +6,6 @@ using RetrospectiveHelper.Models;
 
 namespace RetrospectiveHelper
 {
-    // Skonfiguruj menedżera użytkowników aplikacji używanego w tej aplikacji. Interfejs UserManager jest zdefiniowany w produkcie ASP.NET Identity i jest używany przez aplikację.
-
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
@@ -18,13 +16,12 @@ namespace RetrospectiveHelper
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
-            // Konfiguruj logikę weryfikacji nazw użytkowników
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
             };
-            // Konfiguruj logikę weryfikacji haseł
+
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,

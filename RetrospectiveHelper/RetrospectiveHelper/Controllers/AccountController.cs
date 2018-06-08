@@ -49,14 +49,55 @@ namespace RetrospectiveHelper.Controllers
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
-        public UserInfoViewModel GetUserInfo()
+        public IHttpActionResult GetUserInfo()
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
-            return new UserInfoViewModel
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if (user == null)
             {
-                Email = User.Identity.GetUserName()
-            };
+                return Unauthorized();
+            }
+
+            return Ok(new UserInfoViewModel
+            {
+                FullName = user.FullName,
+                Email = user.Email
+            });
+        }
+
+        // PUT api/Account/ChangeInfo
+        [HttpPut]
+        [Route("ChangeInfo")]
+        public IHttpActionResult ChangeInfo(ChangeInfoBindingModel model)
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.FullName))
+            {
+                user.FullName = model.FullName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.Email))
+            {
+                user.Email = model.Email;
+            }
+
+            var result = UserManager.Update(user);
+            if (!result.Succeeded)
+            {
+                return BadRequest();
+            }
+
+            return Ok(new UserInfoViewModel
+            {
+                FullName = user.FullName,
+                Email = user.Email
+            });
         }
 
         // POST api/Account/Logout
@@ -89,7 +130,7 @@ namespace RetrospectiveHelper.Controllers
 
         // POST api/Account/RemoveLogin
         [Route("DeleteAccount")]
-        public async Task<IHttpActionResult> RemoveLogin()
+        public IHttpActionResult DeleteAccount()
         {
             if (!User.Identity.IsAuthenticated)
             {
@@ -116,7 +157,7 @@ namespace RetrospectiveHelper.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.Email, FullName = model.FullName, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 

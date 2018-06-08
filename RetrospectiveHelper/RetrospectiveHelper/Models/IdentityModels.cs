@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 
 namespace RetrospectiveHelper.Models
 {
@@ -10,11 +11,14 @@ namespace RetrospectiveHelper.Models
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
-            // Element authenticationType musi pasować do elementu zdefiniowanego w elemencie CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
-            // Dodaj tutaj niestandardowe oświadczenia użytkownika
+
             return userIdentity;
         }
+
+        public string FullName { get; set; }
+
+        public virtual ICollection<ProjectMembership> Projects { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -28,5 +32,7 @@ namespace RetrospectiveHelper.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<Project> Projects { get; set; }
     }
 }
